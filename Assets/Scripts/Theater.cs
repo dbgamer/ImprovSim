@@ -5,12 +5,13 @@ public class Theater : MonoBehaviour
   public GUISkin skin;
   public Texture logo;
   public GameObject lights;
+  public ReactionData reactionData;
   public bool Started
   {
     get; private set;
   }
 
-  private float chance = 0.75f;
+  private float crowdSize = 0.75f;
   private MakePerson[] people;
 
   private void Start()
@@ -31,7 +32,7 @@ public class Theater : MonoBehaviour
 
       GUI.skin = skin;
       GUI.DrawTexture( new Rect( midPoint.x - 250, midPoint.y - 300, 500, 250 ), logo, ScaleMode.StretchToFill, true );
-      chance = GUI.HorizontalSlider( new Rect( midPoint.x - 250, midPoint.y, 500, 0 ), chance, 0f, 1f );
+      crowdSize = GUI.HorizontalSlider( new Rect( midPoint.x - 250, midPoint.y, 500, 0 ), crowdSize, 0f, 1f );
       GUI.Label( new Rect( midPoint.x - 250, midPoint.y + 10, 500, 50 ), "Crowd Size" );
       if ( GUI.Button( new Rect( midPoint.x - 75, midPoint.y + 50, 150, 50 ), "Show Start!" ) )
       {
@@ -46,7 +47,7 @@ public class Theater : MonoBehaviour
 
     foreach ( var person in people )
     {
-      person.Run( chance );
+      person.Run( crowdSize );
     }
 
     lights.SetActive( true );

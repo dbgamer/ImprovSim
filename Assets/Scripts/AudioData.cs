@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu( fileName = "New Audio Data", menuName = "Data/Audio" )]
 public class AudioData : ScriptableObject

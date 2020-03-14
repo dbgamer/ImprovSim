@@ -2462,6 +2462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioData: {fileID: 11400000, guid: 412476a8005944646b8a8d4cd572bfc7, type: 2}
+  reactionData: {fileID: 11400000, guid: ce06f8d6d54411f41b2b9d09bb6b99ba, type: 2}
   useFem: 1
 --- !u!82 &-8459635053225791364
 AudioSource:
@@ -2472,7 +2473,8 @@ AudioSource:
   m_GameObject: {fileID: 1715907907628806}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: b937e06a66a260b4aaa690ab15575242,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -2483,7 +2485,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.5
   MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0
@@ -2549,7 +2551,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1.066
+      value: 1.1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

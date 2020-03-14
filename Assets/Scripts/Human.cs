@@ -7,48 +7,106 @@ using UnityEngine;
 public class Human : MonoBehaviour
 {
   public AudioData audioData;
+  public ReactionData reactionData;
   public bool useFem = true;
 
   private AudioSource audioSource = null;
   private Animator animator = null;
-  private float minSpeed = 0.5f;
-  private float maxSpeed = 1.5f;
-  private float minInterest = 0.25f;
-  private float maxInterest = 1.5f;
-  private float madChance = 0.15f;
-  private float cheerChance = 0.15f;
+  private AudioClip selectedClap = null;
+  private Coroutine pendingBehavior = null;
 
-  private AudioClip clapSound = null;
+  private float EnergyMultiplier
+  {
+    get
+    {
+      if ( Input.GetKey( KeyCode.Alpha1 ) || Input.GetKey( KeyCode.Keypad1 ) )
+      {
+        return 0.35f;
+      }
+      if ( Input.GetKey( KeyCode.Alpha2 ) || Input.GetKey( KeyCode.Keypad2 ) )
+      {
+        return 0.5f;
+      }
+      if ( Input.GetKey( KeyCode.Alpha3 ) || Input.GetKey( KeyCode.Keypad3 ) )
+      {
+        return 0.75f;
+      }
+      if ( Input.GetKey( KeyCode.Alpha4 ) || Input.GetKey( KeyCode.Keypad4 ) )
+      {
+        return 2f;
+      }
+      return 1f;
+    }
+  }
 
   private void Start()
   {
     animator = GetComponent<Animator>();
     audioSource = GetComponent<AudioSource>();
+    selectedClap = audioData.ClapSounds[ Random.Range( 0, audioData.ClapSounds.Length - 1 ) ];
+    SetupAnimator();
+    StartBehavior( 0, Hype );
+  }
 
-    clapSound = audioData.ClapSounds[ Random.Range( 0, audioData.ClapSounds.Length - 1 ) ];
-
-    SetSpeed( Random.Range( minSpeed, maxSpeed ) );
-    SetInterest( Random.Range( minInterest, maxInterest ) );
-    SetSpirit( Random.Range( 0f, 1f ) < madChance );
-
-    Hype();
+  private void SetupAnimator()
+  {
+    SetSpeed( Random.Range( reactionData.minSpeed, reactionData.maxSpeed ) );
+    SetInterest( Random.Range( reactionData.minInterest, reactionData.maxInterest ) );
+    SetSpirit( Random.Range( 0f, reactionData.maxSpirit ) );
   }
 
   private void Update()
   {
     if ( Input.GetKeyDown( KeyCode.Space ) )
     {
-      Laugh();
+      StartBehavior( Random.Range( 0f, reactionData.maxDelayForLaugh ), Laugh );
     }
     if ( Input.GetKeyDown( KeyCode.Return ) )
     {
-      Hype();
+      StartBehavior( Random.Range( 0f, reactionData.maxDelayForApplause ), Hype );
     }
+  }
+
+  public void Clap()
+  {
+    audioSource.pitch = Random.Range( 0.8f, 1.15f );
+    audioSource.volume = Random.Range( 0.5f, 1.15f * EnergyMultiplier );
+    audioSource.clip = selectedClap;
+    audioSource.Play();
+  }
+
+  private void StartBehavior( float delay, System.Action run )
+  {
+    float distractionChance = reactionData.distractionChance / EnergyMultiplier;
+    if ( distractionChance > Mathf.Epsilon && Random.Range( 0f, 1f ) < distractionChance )
+    {
+      return;
+    }
+
+    if ( pendingBehavior != null )
+    {
+      StopCoroutine( pendingBehavior );
+    }
+
+    if ( delay <= Mathf.Epsilon )
+    {
+      run.Invoke();
+    }
+    else
+    {
+      pendingBehavior = StartCoroutine( StartBehaviorWithDelay( delay, run ) );
+    }
+  }
+
+  private IEnumerator StartBehaviorWithDelay( float delay, System.Action run )
+  {
+    yield return new WaitForSeconds( delay );
+    run.Invoke();
   }
 
   private void Hype()
   {
-    if ( Random.Range( 0f, 1f ) < cheerChance )
+    if ( EnergyMultiplier >= 1 && Random.Range( 0f, 1f ) < reactionData.cheerChance )
     {
       Cheer();
     }
@@ -58,18 +116,10 @@ public class Human : MonoBehaviour
     }
   }
 
-  public void Clap()
-  {
-    audioSource.pitch = Random.Range( 0.8f, 1.15f );
-    audioSource.volume = Random.Range( 0.5f, 1.15f );
-    audioSource.clip = clapSound;
-    audioSource.Play();
-  }
-
   private void Laugh()
   {
     audioSource.pitch = Random.Range( 0.8f, 1.15f );
-    audioSource.volume = Random.Range( 0.5f, 1.15f );
+    audioSource.volume = Random.Range( 0.5f, 1.15f * EnergyMultiplier );
     var clipList = useFem ? audioData.FemLaughs : audioData.MascLaughs;
     audioSource.clip = clipList[ Random.Range( 0, clipList.Length - 1 ) ];
     audioSource.Play();
@@ -77,7 +127,7 @@ public class Human : MonoBehaviour
 
   private void SetSpeed( float f ) => animator.SetFloat( "Speed", f );
   private void SetInterest( float f ) => animator.SetFloat( "Interest", f );
-  private void SetSpirit( bool mad ) => animator.SetFloat( "Spirit", mad ? 0f : 1f );
+  private void SetSpirit( float f ) => animator.SetFloat( "Spirit", f );
   private void Applause() => animator.SetTrigger( "Applause" );
   private void Cheer() => animator.SetTrigger( "Cheer" );
 }
