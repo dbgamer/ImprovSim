@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b99f7d4986197374e8fdb0c504536ff3, type: 3}
+  m_Name: AudioData
+  m_EditorClassIdentifier: 
+  ClapSounds:
+  - {fileID: 8300000, guid: e5279679fe9ef15449df20aae7bc11e7, type: 3}
+  - {fileID: 8300000, guid: b8a37bada8a5adb4e8ac24813d923c37, type: 3}
+  - {fileID: 8300000, guid: f97763e9a4f8a404b88eec05453f68b4, type: 3}
+  - {fileID: 8300000, guid: 10e394522f235d942b559cab84f033b4, type: 3}
+  - {fileID: 8300000, guid: 3bf07fef3cc244a45a2e2f13392af6ca, type: 3}
+  - {fileID: 8300000, guid: a10d5226a6e41bd4ca17585c6d63fef3, type: 3}
+  FemLaughs:
+  - {fileID: 8300000, guid: fb360aaf297231a478b2878e4a052ec7, type: 3}
+  - {fileID: 8300000, guid: ee8d75143d1cfd94fa43612fd3b5f65c, type: 3}
+  - {fileID: 8300000, guid: 392d764e54e4fe24dbc97ae6b9017dbd, type: 3}
+  - {fileID: 8300000, guid: 60cb68bd03ded8c40b16d12575c703f9, type: 3}
+  - {fileID: 8300000, guid: 98f07dbc87f77184a985d88a91026d07, type: 3}
+  - {fileID: 8300000, guid: 80695fcf903899f4eaf23319827487fb, type: 3}
+  - {fileID: 8300000, guid: 8765401a21861e14aafb298e4253c90d, type: 3}
+  MascLaughs:
+  - {fileID: 8300000, guid: 55758f6adf907764aa164831374a5a34, type: 3}
+  - {fileID: 8300000, guid: 71f104ad05163704985864ca6c8a029b, type: 3}
+  - {fileID: 8300000, guid: a2cae677c2cb94c41833809f1a0197ed, type: 3}
+  - {fileID: 8300000, guid: f8b4b1288abeec34f8506698442d448c, type: 3}
+  - {fileID: 8300000, guid: 09862996cf75e174cad3aa924a497916, type: 3}
+  - {fileID: 8300000, guid: b96f972808abef346b32524c17a03622, type: 3}
+  - {fileID: 8300000, guid: ad5b56f809a0a6c45bc203dbc40b7fc4, type: 3}
