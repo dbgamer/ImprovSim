@@ -21,4 +21,3 @@ MonoBehaviour:
   maxDelayForApplause: 1
   maxDelayForLaugh: 1.5
   distractionChance: 0.25
-  reactionMultiplier: 1
