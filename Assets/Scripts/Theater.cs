@@ -4,8 +4,10 @@ public class Theater : MonoBehaviour
 {
   public GUISkin skin;
   public Texture logo;
+  public Texture crosshair;
   public GameObject lights;
   public ReactionData reactionData;
+  public GameObject[] enableOnStart;
   public bool Started
   {
     get; private set;
@@ -24,7 +26,7 @@ public class Theater : MonoBehaviour
   {
     if ( Started )
     {
-      GUI.Label( new Rect( 10, Screen.height - 25, Screen.width - 10, 25 ), "Mouse to Look. WSAD / Arrow Keys to move. [Spacebar] for Laughs. [Enter] for hype." );
+      GUI.DrawTexture( new Rect( Screen.width / 2 - 5, Screen.height / 2 - 5, 10, 10 ), crosshair, ScaleMode.ScaleToFit );
     }
     else
     {
@@ -44,6 +46,11 @@ public class Theater : MonoBehaviour
   public void Run()
   {
     Started = true;
+
+    foreach ( var element in enableOnStart )
+    {
+      element.SetActive( true );
+    }
 
     foreach ( var person in people )
     {
